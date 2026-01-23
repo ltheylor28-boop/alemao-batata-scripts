@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alemão Batata Scripts 🥔</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1810 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animação de batatas caindo */
+        .potato-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .potato {
+            position: absolute;
+            font-size: 30px;
+            animation: fall linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* Container principal */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF6347 100%);
+            border-radius: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '🥔';
+            position: absolute;
+            font-size: 150px;
+            opacity: 0.1;
+            top: -30px;
+            right: -20px;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .logo {
+            font-size: 80px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #000;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.3);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #2d1810;
+            font-weight: 600;
+        }
+
+        /* Seção de Follow */
+        .follow-section {
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 40px;
+            text-align: center;
+            border: 3px solid #FFD700;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .follow-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #FFD700;
+        }
+
+        .tiktok-btn {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            padding: 20px 50px;
+            font-size: 1.3em;
+            font-weight: bold;
+            border-radius: 50px;
+            text-decoration: none;
+            border: 3px solid #FFD700;
+            transition: all 0.3s ease;
+            margin: 20px 0;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tiktok-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 215, 0, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .tiktok-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .tiktok-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.6);
+        }
+
+        .tiktok-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .confirm-btn {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+            display: none;
+            margin-top: 20px;
+        }
+
+        .confirm-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+        }
+
+        /* Seção de Scripts */
+        .scripts-section {
+            margin-top: 40px;
+        }
+
+        .locked-overlay {
+            filter: blur(5px);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .lock-message {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(255,215,0,0.1) 0%, rgba(255,99,71,0.1) 100%);
+            border-radius: 20px;
+            border: 2px dashed #FFD700;
+        }
+
+        .lock-message h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #FFD700;
+        }
+
+        .script-card {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 3px solid #FFD700;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .script-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3);
+        }
+
+        .script-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .script-title {
+            font-size: 2em;
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+
+        .script-description {
+            color: #ccc;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .script-code {
+            background: #000;
+            border: 2px solid #FFD700;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 400px;
+            overflow-y: auto;
+            position: relative;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #0f0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .script-code::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .script-code::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 10px;
+        }
+
+        .script-code::-webkit-scrollbar-thumb {
+            background: #FFD700;
+            border-radius: 10px;
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .copied {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: #fff;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .logo {
+                font-size: 60px;
+            }
+
+            .script-title {
+                font-size: 1.5em;
+            }
+
+            .tiktok-btn {
+                padding: 15px 30px;
+                font-size: 1.1em;
+            }
+        }
+
+        /* Mensagem de sucesso */
+        .success-message {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Batatas caindo no fundo -->
+    <div class="potato-bg" id="potatoBg"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">🥔</div>
+            <h1>Alemão Batata Scripts</h1>
+            <p class="subtitle">Scripts Universais para Roblox Studio</p>
+        </header>
+
+        <!-- Seção de Follow -->
+        <div class="follow-section" id="followSection">
+            <h2>🎯 Me Siga No TikTok Por Favor!</h2>
+            <p style="font-size: 1.1em; margin: 15px 0; color: #ccc;">
+                Para desbloquear os scripts, siga-me no TikTok! 🥔✨
+            </p>
+            
+            <a href="https://www.tiktok.com/@theylin.578" target="_blank" class="tiktok-btn" id="tiktokBtn">
+                <span>Me Siga! 🎵 @theylin.578</span>
+            </a>
+
+            <button class="confirm-btn" id="confirmBtn">
+                ✅ Já Segui! Desbloquear Scripts
+            </button>
+
+            <div class="success-message" id="successMsg">
+                🎉 Obrigado por me seguir! Scripts desbloqueados! 🥔
+            </div>
+        </div>
+
+        <!-- Seção de Scripts (Bloqueada inicialmente) -->
+        <div class="scripts-section" id="scriptsSection">
+            <div class="lock-message" id="lockMessage">
+                <h2>🔒 Scripts Bloqueados</h2>
+                <p style="font-size: 1.3em; color: #FFD700; margin-top: 20px;">
+                    Siga-me no TikTok para desbloquear!
+                </p>
+            </div>
+
+            <div id="scriptContent" style="display: none;">
+                <!-- Script Card -->
+                <div class="script-card">
+                    <div class="script-header">
+                        <h2 class="script-title">🥔 Alemão Batata Hub V1</h2>
+                    </div>
+                    
+                    <p class="script-description">
+                        Marque posições, teleporte-se instantaneamente e ative o teleporte infinito!
+                    </p>
+
+                    <button class="copy-btn" onclick="copyScript()">
+                        📋 Copiar Script
+                    </button>
+
+                    <div class="script-code" id="scriptCode">-- Alemão Batata Hub 🥔
+-- Script feito com muito amor e carinho! 💛
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local savedPosition = nil
+local infiniteTeleportActive = false
+local infiniteTeleportConnection = nil
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "AlemãoBatataHub"
+screenGui.ResetOnSpawn = false
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+screenGui.Parent = playerGui
+
+local mainFrame = Instance.new("Frame")
+mainFrame.Name = "MainFrame"
+mainFrame.Size = UDim2.new(0, 280, 0, 280)
+mainFrame.Position = UDim2.new(0.5, -140, 0.5, -140)
+mainFrame.BackgroundColor3 = Color3.fromRGB(20, 15, 0)
+mainFrame.BackgroundTransparency = 0.05
+mainFrame.BorderSizePixel = 0
+mainFrame.Active = true
+mainFrame.Draggable = true
+mainFrame.Parent = screenGui
+
+local mainCorner = Instance.new("UICorner")
+mainCorner.CornerRadius = UDim.new(0, 15)
+mainCorner.Parent = mainFrame
+
+local mainStroke = Instance.new("UIStroke")
+mainStroke.Color = Color3.fromRGB(255, 215, 0)
+mainStroke.Thickness = 3
+mainStroke.Parent = mainFrame
+
+local header = Instance.new("Frame")
+header.Name = "Header"
+header.Size = UDim2.new(1, 0, 0, 45)
+header.BackgroundColor3 = Color3.fromRGB(255, 215, 0)
+header.BorderSizePixel = 0
+header.Parent = mainFrame
+
+local headerCorner = Instance.new("UICorner")
+headerCorner.CornerRadius = UDim.new(0, 12)
+headerCorner.Parent = header
+
+local headerGradient = Instance.new("UIGradient")
+headerGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 215, 0)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 165, 0))
+}
+headerGradient.Rotation = 135
+headerGradient.Parent = header
+
+local title = Instance.new("TextLabel")
+title.Name = "Title"
+title.Size = UDim2.new(1, -80, 1, 0)
+title.Position = UDim2.new(0, 15, 0, 0)
+title.BackgroundTransparency = 1
+title.Text = "🥔 Alemão Batata Hub"
+title.TextColor3 = Color3.fromRGB(0, 0, 0)
+title.Font = Enum.Font.GothamBold
+title.TextSize = 16
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.Parent = header
+
+local minimizeBtn = Instance.new("TextButton")
+minimizeBtn.Name = "MinimizeBtn"
+minimizeBtn.Size = UDim2.new(0, 24, 0, 24)
+minimizeBtn.Position = UDim2.new(1, -60, 0.5, -12)
+minimizeBtn.BackgroundColor3 = Color3.fromRGB(255, 165, 0)
+minimizeBtn.Text = "−"
+minimizeBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
+minimizeBtn.Font = Enum.Font.GothamBold
+minimizeBtn.TextSize = 18
+minimizeBtn.BorderSizePixel = 0
+minimizeBtn.Parent = header
+
+local minCorner = Instance.new("UICorner")
+minCorner.CornerRadius = UDim.new(0, 4)
+minCorner.Parent = minimizeBtn
+
+local closeBtn = Instance.new("TextButton")
+closeBtn.Name = "CloseBtn"
+closeBtn.Size = UDim2.new(0, 24, 0, 24)
+closeBtn.Position = UDim2.new(1, -28, 0.5, -12)
+closeBtn.BackgroundColor3 = Color3.fromRGB(255, 68, 68)
+closeBtn.Text = "✕"
+closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeBtn.Font = Enum.Font.GothamBold
+closeBtn.TextSize = 16
+closeBtn.BorderSizePixel = 0
+closeBtn.Parent = header
+
+local closeCorner = Instance.new("UICorner")
+closeCorner.CornerRadius = UDim.new(0, 4)
+closeCorner.Parent = closeBtn
+
+local content = Instance.new("Frame")
+content.Name = "Content"
+content.Size = UDim2.new(1, -40, 1, -65)
+content.Position = UDim2.new(0, 20, 0, 55)
+content.BackgroundTransparency = 1
+content.Parent = mainFrame
+
+local function createButton(name, text, position, emoji)
+    local btn = Instance.new("TextButton")
+    btn.Name = name
+    btn.Size = UDim2.new(1, 0, 0, 48)
+    btn.Position = position
+    btn.BackgroundColor3 = Color3.fromRGB(255, 215, 0)
+    btn.Text = emoji .. " " .. text
+    btn.TextColor3 = Color3.fromRGB(0, 0, 0)
+    btn.Font = Enum.Font.GothamBold
+    btn.TextSize = 14
+    btn.BorderSizePixel = 0
+    btn.AutoButtonColor = false
+    btn.Parent = content
+    
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 10)
+    corner.Parent = btn
+    
+    local gradient = Instance.new("UIGradient")
+    gradient.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 215, 0)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 165, 0))
+    }
+    gradient.Rotation = 135
+    gradient.Parent = btn
+    
+    local stroke = Instance.new("UIStroke")
+    stroke.Color = Color3.fromRGB(255, 215, 0)
+    stroke.Thickness = 2
+    stroke.Parent = btn
+    
+    return btn
+end
+
+local markBtn = createButton("MarkBtn", "Marcar Posição", UDim2.new(0, 0, 0, 0), "📍")
+local teleportBtn = createButton("TeleportBtn", "Teletransportar", UDim2.new(0, 0, 0, 60), "⚡")
+local infiniteBtn = createButton("InfiniteBtn", "Teleporte Infinito", UDim2.new(0, 0, 0, 120), "♾️")
+
+local status = Instance.new("TextLabel")
+status.Name = "Status"
+status.Size = UDim2.new(1, 0, 0, 40)
+status.Position = UDim2.new(0, 0, 0, 180)
+status.BackgroundColor3 = Color3.fromRGB(255, 215, 0)
+status.BackgroundTransparency = 0.9
+status.Text = "Pronto para usar! 🎮"
+status.TextColor3 = Color3.fromRGB(255, 215, 0)
+status.Font = Enum.Font.Gotham
+status.TextSize = 12
+status.BorderSizePixel = 0
+status.TextWrapped = true
+status.Parent = content
+
+local statusCorner = Instance.new("UICorner")
+statusCorner.CornerRadius = UDim.new(0, 8)
+statusCorner.Parent = status
+
+local statusStroke = Instance.new("UIStroke")
+statusStroke.Color = Color3.fromRGB(255, 215, 0)
+statusStroke.Thickness = 1
+statusStroke.Parent = status
+
+local function addHoverEffect(button)
+    local originalPos = button.Position
+    
+    button.MouseEnter:Connect(function()
+        local tween = TweenService:Create(button, TweenInfo.new(0.2), {
+            Position = originalPos + UDim2.new(0, 0, 0, -2)
+        })
+        tween:Play()
+    end)
+    
+    button.MouseLeave:Connect(function()
+        local tween = TweenService:Create(button, TweenInfo.new(0.2), {
+            Position = originalPos
+        })
+        tween:Play()
+    end)
+end
+
+addHoverEffect(markBtn)
+addHoverEffect(teleportBtn)
+addHoverEffect(infiniteBtn)
+addHoverEffect(minimizeBtn)
+addHoverEffect(closeBtn)
+
+local function createPulse(button, color1, color2)
+    local pulse = true
+    spawn(function()
+        while pulse and button.Parent do
+            local stroke = button:FindFirstChildOfClass("UIStroke")
+            if stroke then
+                local tween1 = TweenService:Create(stroke, TweenInfo.new(0.75), {Color = color2, Thickness = 4})
+                tween1:Play()
+                wait(0.75)
+                if not pulse then break end
+                local tween2 = TweenService:Create(stroke, TweenInfo.new(0.75), {Color = color1, Thickness = 2})
+                tween2:Play()
+                wait(0.75)
+            else
+                break
+            end
+        end
+    end)
+    return function() pulse = false end
+end
+
+local isMinimized = false
+minimizeBtn.MouseButton1Click:Connect(function()
+    isMinimized = not isMinimized
+    local tween = TweenService:Create(mainFrame, TweenInfo.new(0.3), {
+        Size = isMinimized and UDim2.new(0, 280, 0, 45) or UDim2.new(0, 280, 0, 280)
+    })
+    tween:Play()
+    minimizeBtn.Text = isMinimized and "+" or "−"
+    content.Visible = not isMinimized
+end)
+
+closeBtn.MouseButton1Click:Connect(function()
+    screenGui:Destroy()
+end)
+
+markBtn.MouseButton1Click:Connect(function()
+    local char = player.Character
+    if char and char:FindFirstChild("HumanoidRootPart") then
+        savedPosition = char.HumanoidRootPart.CFrame
+        
+        local gradient = markBtn:FindFirstChildOfClass("UIGradient")
+        gradient.Color = ColorSequence.new{
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(144, 238, 144)),
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(50, 205, 50))
+        }
+        
+        local pos = savedPosition.Position
+        status.Text = string.format("✅ Posição salva!\nX: %.1f Y: %.1f Z: %.1f", pos.X, pos.Y, pos.Z)
+        
+        wait(1)
+        gradient.Color = ColorSequence.new{
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 215, 0)),
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 165, 0))
+        }
+    end
+end)
+
+teleportBtn.MouseButton1Click:Connect(function()
+    if savedPosition then
+        local char = player.Character
+        if char and char:FindFirstChild("HumanoidRootPart") then
+            char.HumanoidRootPart.CFrame = savedPosition
+            
+            local stopPulse = createPulse(teleportBtn, Color3.fromRGB(255, 215, 0), Color3.fromRGB(255, 21
